@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
 
     environment:
-      name: github-pages
+      name: https://dharu2402-D24.github.io/Portfolio/
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
