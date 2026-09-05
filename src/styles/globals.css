@@ -1,0 +1,77 @@
+/* Utility: hide scrollbar while keeping scroll functionality */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Loading screen animations ── */
+@keyframes loader-spin-cw {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes loader-spin-ccw {
+  0% { transform: rotate(360deg); }
+  100% { transform: rotate(0deg); }
+}
+
+@keyframes loader-pulse-glow {
+  0%, 100% {
+    opacity: 0.65;
+    transform: scale(0.96);
+    filter: drop-shadow(0 0 16px rgba(232, 69, 69, 0.45));
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.04);
+    filter: drop-shadow(0 0 28px rgba(45, 212, 191, 0.55));
+  }
+}
+
+@keyframes loader-sheen {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+.loader-ring-cw {
+  animation: loader-spin-cw 8s linear infinite;
+  transform-origin: center center;
+}
+
+.loader-ring-ccw {
+  animation: loader-spin-ccw 5s linear infinite;
+  transform-origin: center center;
+}
+
+.loader-core-pulse {
+  animation: loader-pulse-glow 2.4s ease-in-out infinite;
+  transform-origin: center center;
+}
+
+/* Selection styling to match brand */
+::selection {
+  background: rgba(232, 69, 69, 0.35);
+  color: #f5f0e8;
+}
+
+/* ── Stadium-wave hover on "Let's Chat" ── */
+.wave-trigger {
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+              background-color 0.2s ease;
+  transform-origin: center center;
+}
+
+.wave-trigger:hover {
+  transform: scale(1.1);
+}
+
+.wave-char {
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.wave-trigger:hover .wave-char {
+  transform: translateY(-3px) scale(1.08);
+}
+
+.wave-trigger:not(:hover) .wave-char {
+  transform: translateY(0) scale(1);
+}
