@@ -69,6 +69,7 @@ export default function App() {
 
     let cancelled = false;
     let rafId = 0;
+
     let lenis: {
       destroy: () => void;
       raf: (time: number) => void;
@@ -221,19 +222,35 @@ export default function App() {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          const id = (entry.target as HTMLElement).dataset.section as Section;
+          const id =
+            (entry.target as HTMLElement)
+              .dataset.section as Section;
+
           ratios[id] = entry.intersectionRatio;
         });
 
-        const top = (Object.entries(ratios) as [Section, number][]).reduce(
+        const top = (
+          Object.entries(ratios) as [Section, number][]
+        ).reduce(
           (a, b) => (b[1] > a[1] ? b : a)
         )[0];
 
-        setActiveSection((current) => (current === top ? current : top));
+        setActiveSection((current) =>
+          current === top ? current : top
+        );
       },
       {
         rootMargin: `-${NAV_OFFSET + 20}px 0px -30% 0px`,
-        threshold: [0, 0.05, 0.1, 0.2, 0.3, 0.5, 0.7, 1],
+        threshold: [
+          0,
+          0.05,
+          0.1,
+          0.2,
+          0.3,
+          0.5,
+          0.7,
+          1,
+        ],
       }
     );
 
@@ -242,13 +259,13 @@ export default function App() {
     });
 
     return () => observer.disconnect();
-
   }, [route]);
 
   return (
     <div
-      className={`relative min-h-screen text-white overflow-x-hidden font-['Space_Grotesk'] ${isTouch ? "" : "cursor-none"
-        } ${loading ? "h-screen overflow-hidden" : ""}`}
+      className={`relative min-h-screen text-white overflow-x-hidden font-['Space_Grotesk'] ${
+        isTouch ? "" : "cursor-none"
+      } ${loading ? "h-screen overflow-hidden" : ""}`}
     >
       {/* Loading screen */}
       <AnimatePresence>
@@ -261,7 +278,7 @@ export default function App() {
 
       {/* ─────────────────────────────────────
           GLOBAL BACKGROUND
-          ───────────────────────────────────── */}
+      ───────────────────────────────────── */}
 
       <div className="fixed inset-0 z-0 bg-[#0d0d0d]" />
 
@@ -269,11 +286,9 @@ export default function App() {
 
       {/* ─────────────────────────────────────
           ALL WEBSITE CONTENT
-          ───────────────────────────────────── */}
+      ───────────────────────────────────── */}
 
       <div className="relative z-10">
-        {!isTouch && <CustomCursor />}
-
         <Nav
           active={activeSection}
           onNavigate={handleNav}
@@ -407,6 +422,11 @@ export default function App() {
 
         <Footer onContact={openContact} />
       </div>
+
+      {/* Custom cursor */}
+      {!isTouch && (
+        <CustomCursor modalOpen={contactOpen} />
+      )}
 
       {/* Contact modal */}
       {contactLoaded && (

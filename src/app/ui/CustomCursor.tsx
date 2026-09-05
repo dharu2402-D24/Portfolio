@@ -1,6 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 
-export function CustomCursor() {
+export function CustomCursor({
+  modalOpen = false,
+}: {
+  modalOpen?: boolean;
+}) {
   const dotRef = useRef<HTMLDivElement>(null);
   const [hidden, setHidden] = useState(true);
   const [isHovering, setIsHovering] = useState(false);
@@ -8,8 +12,16 @@ export function CustomCursor() {
   useEffect(() => {
     if (window.matchMedia("(pointer: coarse)").matches) return;
 
-    const target = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-    const dot = { x: target.x, y: target.y };
+    const target = {
+      x: window.innerWidth / 2,
+      y: window.innerHeight / 2,
+    };
+
+    const dot = {
+      x: target.x,
+      y: target.y,
+    };
+
     let raf = 0;
     let isHidden = true;
     let isMoving = false;
@@ -32,23 +44,28 @@ export function CustomCursor() {
       }
 
       clearTimeout(moveTimeout);
+
       moveTimeout = setTimeout(() => {
         isMoving = false;
       }, 100);
 
-      // elementFromPoint() can trigger style/layout work, so don't run it
-      // on every mouse event. Hover state only needs to update a few times
-      // per second to remain visually responsive.
       const now = performance.now();
+
       if (now - lastHoverCheck >= 50) {
         lastHoverCheck = now;
 
-        const el = document.elementFromPoint(e.clientX, e.clientY);
+        const el = document.elementFromPoint(
+          e.clientX,
+          e.clientY
+        );
+
         if (el !== lastEl) {
           lastEl = el;
+
           const interactive = el?.closest(
             "button, a, [role='button'], input, textarea, select, label[for], [data-cursor='hover']"
           );
+
           setIsHovering(!!interactive);
         }
       }
@@ -74,33 +91,75 @@ export function CustomCursor() {
       dot.y += dy * 0.35;
 
       const v = Math.sqrt(dx * dx + dy * dy);
-      const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+      const angle =
+        Math.atan2(dy, dx) * (180 / Math.PI);
 
-      const scaleX = Math.min(2.0, 1 + v * 0.015);
-      const scaleY = Math.max(0.6, 1 - v * 0.01);
+      const scaleX = Math.min(
+        2.0,
+        1 + v * 0.015
+      );
+
+      const scaleY = Math.max(
+        0.6,
+        1 - v * 0.01
+      );
 
       if (dotRef.current) {
-        dotRef.current.style.transform = `translate3d(${dot.x}px, ${dot.y}px, 0) translate(-50%, -50%) rotate(${angle}deg) scale(${scaleX}, ${scaleY})`;
+        dotRef.current.style.transform =
+          `translate3d(${dot.x}px, ${dot.y}px, 0) ` +
+          `translate(-50%, -50%) ` +
+          `rotate(${angle}deg) ` +
+          `scale(${scaleX}, ${scaleY})`;
       }
 
-      const diff = Math.abs(dx) + Math.abs(dy);
+      const diff =
+        Math.abs(dx) + Math.abs(dy);
+
       if (!isMoving && diff < 0.1) {
         if (dotRef.current) {
-          dotRef.current.style.transform = `translate3d(${target.x}px, ${target.y}px, 0) translate(-50%, -50%) rotate(0deg) scale(1, 1)`;
+          dotRef.current.style.transform =
+            `translate3d(${target.x}px, ${target.y}px, 0) ` +
+            `translate(-50%, -50%) ` +
+            `rotate(0deg) ` +
+            `scale(1, 1)`;
         }
       } else {
         raf = requestAnimationFrame(tick);
       }
     };
 
-    window.addEventListener("mousemove", move, { passive: true });
-    document.addEventListener("mouseleave", leave);
-    document.addEventListener("mouseenter", enter);
+    window.addEventListener(
+      "mousemove",
+      move,
+      { passive: true }
+    );
+
+    document.addEventListener(
+      "mouseleave",
+      leave
+    );
+
+    document.addEventListener(
+      "mouseenter",
+      enter
+    );
 
     return () => {
-      window.removeEventListener("mousemove", move);
-      document.removeEventListener("mouseleave", leave);
-      document.removeEventListener("mouseenter", enter);
+      window.removeEventListener(
+        "mousemove",
+        move
+      );
+
+      document.removeEventListener(
+        "mouseleave",
+        leave
+      );
+
+      document.removeEventListener(
+        "mouseenter",
+        enter
+      );
+
       clearTimeout(moveTimeout);
       cancelAnimationFrame(raf);
     };
@@ -110,7 +169,11 @@ export function CustomCursor() {
     <div
       ref={dotRef}
       aria-hidden
-      className="pointer-events-none fixed left-0 top-0 z-[9999] rounded-full will-change-transform"
+      className={`pointer-events-none fixed left-0 top-0 rounded-full will-change-transform ${
+        modalOpen
+          ? "z-[9999]"
+          : "z-[50]"
+      }`}
       style={{
         width: isHovering ? 10 : 28,
         height: isHovering ? 10 : 28,
