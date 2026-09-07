@@ -155,14 +155,18 @@ export default function App() {
     }
   };
 
+  const scrollToTop = () => {
+    if (lenisRef.current) {
+      lenisRef.current.scrollTo(0, { immediate: true });
+    } else {
+      window.scrollTo(0, 0);
+    }
+  };
+
   const handleViewAll = () => {
     setActiveId(null);
     setRoute("projects");
-
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    scrollToTop();
   };
 
   const handleOpen = (id: string) => {
@@ -171,30 +175,19 @@ export default function App() {
     if (p && ("process" in p || "video" in p)) {
       setActiveId(id);
       setRoute("detail");
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
+      scrollToTop();
     } else {
       setRoute("projects");
-
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
+      scrollToTop();
     }
   };
 
   const handleBack = () => {
     setActiveId(null);
     setRoute("projects");
-
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    scrollToTop();
   };
+
 
   // ── Active section tracking ──
   useEffect(() => {
