@@ -14,7 +14,8 @@ import odysseyLogo from "../../assets/images/odyssey logo.png";
 import openHouseShirt from "../../assets/images/OPENHOUSESHIRT.png";
 import airupImage from "../../assets/images/AIRUPBOTTLEMOCKUP.png";
 import donutImage from "../../assets/images/donut.png";
-import spamItImage from "../../assets/images/spam_it.png";
+import spamItLogo from "../../assets/images/spam_it_logo.png";
+import spamItThumbnail from "../../assets/images/spam_it_thumbnail.png";
 import ecellCardImage from "../../assets/images/ecell tshirt 4.png";
 import ecellHeroImage from "../../assets/images/ECELLTHSIRTS (2).png";
 import igniteRoomShirt from "../../assets/images/IGNITEROOMSHIRT.png";
@@ -149,7 +150,8 @@ export const more: (ProjectDetail | { id: string; title: string; category: strin
     id: "spam-it",
     title: "Spam It — LED Race Game",
     category: "Game Des+Dev",
-    image: spamItImage,
+    image: spamItLogo,
+    hero: spamItThumbnail,
     description:
       "A two-player Arduino-based racing game controlled through physical button inputs.",
     role: "Electronics and Aesthetics",
