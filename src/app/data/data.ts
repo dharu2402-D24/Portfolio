@@ -278,7 +278,7 @@ export const more: (ProjectDetail | { id: string; title: string; category: strin
   {
     id: "odyssey",
     title: "IIITD Odyssey 2024",
-    category: "Logo Redesign",
+    category: "Logo Design",
     image: odysseyLogo,
   },
 
@@ -398,7 +398,7 @@ export const more: (ProjectDetail | { id: string; title: string; category: strin
   {
     id: "airup",
     title: "AIRUP Bottle Design",
-    category: "Redesign",
+    category: "Product Design",
     image: airupImage,
   },
 
