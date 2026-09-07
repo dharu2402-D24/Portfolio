@@ -173,7 +173,7 @@ export const more: (ProjectDetail | { id: string; title: string; category: strin
         text: "Created an engaging tangible gaming experience beyond screens. Demonstrated real-time hardware interaction and responsiveness. Successfully merged game design with embedded systems.",
       },
     ],
-    link: "https://github.com",
+    link: "https://github.com/dharu2402-D24/Spam-It",
   },
 
   {
