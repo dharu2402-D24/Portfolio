@@ -112,7 +112,7 @@ export default function App() {
   const project = allProjects.find((p) => p.id === activeId);
 
   const isDetailed = (p: typeof project): p is ProjectDetail =>
-    !!p && "process" in p;
+    !!p && ("process" in p || "video" in p);
 
   const scrollTo = (s: Section) => {
     const el =
@@ -168,7 +168,7 @@ export default function App() {
   const handleOpen = (id: string) => {
     const p = allProjects.find((x) => x.id === id);
 
-    if (p && "process" in p) {
+    if (p && ("process" in p || "video" in p)) {
       setActiveId(id);
       setRoute("detail");
 

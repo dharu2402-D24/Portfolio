@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, LayoutGroup, AnimatePresence } from "motion/react";
-import imgLogo from "../../assets/images/logo.png";
+import imgLogo from "../../assets/images/logowhitedm.png";
+
 
 /* ── Cipher character set for the decrypt hover effect ── */
 const CIPHER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789—·×+≈∆";
@@ -299,14 +300,9 @@ export function Nav({
             <img
               src={imgLogo}
               alt="DM"
-              width={28}
-              height={28}
               draggable={false}
-              className="h-7 w-7 object-contain opacity-90 group-hover:opacity-100 transition-opacity duration-700 select-none"
-              style={{
-                backfaceVisibility: "hidden",
-                transform: "translateZ(0)",
-              }}
+              className="h-7 w-auto object-contain opacity-90 group-hover:opacity-100 transition-opacity duration-700 select-none"
+              style={{ backfaceVisibility: "hidden", transform: "translateZ(0)" }}
             />
           </motion.button>
 

@@ -5,7 +5,7 @@ import { SectionLabel } from "../ui/SectionLabel";
 import { Reveal } from "../effects/Reveal";
 import { allProjects } from "../data/data";
 
-const categories = ["All", "UI/UX Design", "Graphic Design", "3D Design", "Logo Redesign", "Redesign"];
+const categories = ["All", "3D / Game Dev", "UI/UX Design", "Graphic Design", "Logo Design", "3D Design", "Logo Redesign", "Redesign"];
 
 export function ProjectsPage({ onOpen }: { onOpen: (id: string) => void }) {
   const [filter, setFilter] = useState("All");
@@ -73,7 +73,7 @@ export function ProjectsPage({ onOpen }: { onOpen: (id: string) => void }) {
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.5, delay: i * 0.04, ease: [0.22, 1, 0.36, 1] }}
             >
-              <ProjectCard project={p} index={0} onOpen={"process" in p ? onOpen : undefined} />
+              <ProjectCard project={p} index={0} onOpen={("process" in p || "video" in p) ? onOpen : undefined} />
             </motion.div>
           ))}
         </AnimatePresence>

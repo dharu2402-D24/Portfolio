@@ -1,8 +1,9 @@
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
+import { useState } from "react";
 import { Button } from "../ui/Button";
 import { SectionLabel } from "../ui/SectionLabel";
 import { Reveal } from "../effects/Reveal";
-import { ProjectDetail, featured } from "../data/data";
+import { ProjectDetail, allProjects } from "../data/data";
 
 export function ProjectDetailPage({
   project,
@@ -13,18 +14,47 @@ export function ProjectDetailPage({
   onBack: () => void;
   onOpen: (id: string) => void;
 }) {
-  const idx = featured.findIndex((p) => p.id === project.id);
-  const next = idx === -1 ? featured[0] : featured[(idx + 1) % featured.length];
+  const [imageIdx, setImageIdx] = useState(0);
 
-  const heroImage = project.hero ?? project.image;
-  const hasHeroImage = Boolean(heroImage);
+  // Build the images array: prefer project.images, else fall back to hero/image
+  const imageList: string[] = project.images
+    ? project.images
+    : project.hero
+    ? [project.hero]
+    : project.image
+    ? [project.image]
+    : [];
+  const hasImages = imageList.length > 0;
+  const hasMultiple = imageList.length > 1;
+  const heroImage = imageList[imageIdx] ?? "";
+
+  // Next project cycles through ALL openable projects (featured + more)
+  const openable = (allProjects as ProjectDetail[]).filter((p) => "process" in p || "video" in p);
+  const idx = openable.findIndex((p) => p.id === project.id);
+  const next = idx === -1 ? openable[0] : openable[(idx + 1) % openable.length];
 
   return (
     <section className="relative pt-36 pb-24 px-6 md:px-14 max-w-[1200px] mx-auto">
       <Reveal>
-        <Button variant="outline" icon="left" onClick={onBack}>
-          Back to Projects
-        </Button>
+        <div className="flex items-center gap-3 flex-wrap">
+          <Button variant="outline" icon="left" onClick={onBack}>
+            Back to Projects
+          </Button>
+
+          {project.link && (
+            <a
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-[#2dd4bf]/40 bg-[#2dd4bf]/10 font-['Space_Mono'] text-[11px] tracking-[0.18em] uppercase text-[#2dd4bf] hover:bg-[#2dd4bf]/20 hover:border-[#2dd4bf]/60 transition-all duration-300"
+            >
+              Visit Project
+              <svg viewBox="0 0 24 24" fill="none" className="w-3 h-3">
+                <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </a>
+          )}
+        </div>
       </Reveal>
 
       <Reveal delay={0.05}>
@@ -47,32 +77,87 @@ export function ProjectDetailPage({
         </p>
       </Reveal>
 
-      {/* Hero image */}
+      {/* Hero image (with optional carousel) */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{
-          duration: 1,
-          delay: 0.3,
-          ease: [0.22, 1, 0.36, 1],
-        }}
-        className="mt-12 aspect-[16/9] rounded-2xl overflow-hidden border border-white/[0.08] bg-[#111111] shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)]"
+        transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        className="mt-12 relative"
       >
-        {hasHeroImage && (
-          <img
-            src={heroImage}
-            alt={project.title}
-            width={1200}
-            height={675}
-            loading="eager"
-            fetchPriority="high"
-            className="w-full h-full object-cover"
-          />
+        <div className="relative rounded-2xl overflow-hidden border border-white/[0.08] bg-[#111111] shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)]">
+          <AnimatePresence mode="wait">
+            {project.video ? (
+              <video
+                src={project.video}
+                autoPlay
+                muted
+                loop
+                playsInline
+                controls
+                className="w-full h-auto block"
+              />
+            ) : hasImages ? (
+              <motion.img
+                key={imageIdx}
+                src={heroImage}
+                alt={`${project.title} ${imageIdx + 1}`}
+                width={1200}
+                height={900}
+                loading="eager"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                className="w-full h-auto block"
+              />
+            ) : null}
+          </AnimatePresence>
+
+          {/* Prev / Next arrows */}
+          {hasMultiple && (
+            <>
+              <button
+                onClick={() => setImageIdx((i) => (i - 1 + imageList.length) % imageList.length)}
+                className="absolute left-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-black/50 border border-white/10 flex items-center justify-center text-white/70 hover:text-white hover:bg-black/70 transition-all duration-200 cursor-pointer"
+                aria-label="Previous image"
+              >
+                <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4">
+                  <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+              <button
+                onClick={() => setImageIdx((i) => (i + 1) % imageList.length)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-black/50 border border-white/10 flex items-center justify-center text-white/70 hover:text-white hover:bg-black/70 transition-all duration-200 cursor-pointer"
+                aria-label="Next image"
+              >
+                <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4">
+                  <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+            </>
+          )}
+        </div>
+
+        {/* Dot indicators */}
+        {hasMultiple && (
+          <div className="flex justify-center gap-2 mt-4">
+            {imageList.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setImageIdx(i)}
+                className={`w-1.5 h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                  i === imageIdx ? "bg-[#e84545] w-4" : "bg-white/20 hover:bg-white/40"
+                }`}
+                aria-label={`Image ${i + 1}`}
+              />
+            ))}
+          </div>
         )}
       </motion.div>
 
       {/* Role */}
-      <Reveal delay={0.1}>
+      {project.role && (
+        <Reveal delay={0.1}>
         <div className="mt-20 flex items-start gap-4">
           <motion.div
             initial={{ height: 0 }}
@@ -93,10 +178,12 @@ export function ProjectDetailPage({
           </div>
         </div>
       </Reveal>
+      )}
 
       {/* Process */}
-      <div className="mt-24">
-        <Reveal>
+      {project.process && project.process.length > 0 && (
+        <div className="mt-24">
+          <Reveal>
           <SectionLabel>Design Process</SectionLabel>
         </Reveal>
 
@@ -153,6 +240,7 @@ export function ProjectDetailPage({
           ))}
         </div>
       </div>
+      )}
 
       {/* Next project */}
       <Reveal>

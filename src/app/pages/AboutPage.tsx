@@ -16,13 +16,29 @@ function InteractiveRender() {
   const [shouldLoad, setShouldLoad] = useState(false);
 
   useEffect(() => {
-    // Preload the 3D model in the background after initial entrance animations complete.
-    // This avoids blocking the main thread during scrolling, completely eliminating the lag.
-    const t = setTimeout(() => {
-      setShouldLoad(true);
-    }, 3500);
+    const container = containerRef.current;
+    if (!container) return;
 
-    return () => clearTimeout(t);
+    // Only start loading the heavy 3D chunk once the user has
+    // actually scrolled the container into view. This prevents
+    // the model from popping in after a fixed timer fires while
+    // the user is nowhere near this section.
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShouldLoad(true);
+          observer.disconnect(); // one-shot — stop watching once loaded
+        }
+      },
+      {
+        rootMargin: "200px", // start loading 200px before it enters view
+        threshold: 0,
+      }
+    );
+
+    observer.observe(container);
+
+    return () => observer.disconnect();
   }, []);
 
   return (
@@ -41,6 +57,7 @@ function InteractiveRender() {
     </motion.div>
   );
 }
+
 
 const capabilities = [
   { label: "Graphic Design", tools: "Figma · Illustrator · Photoshop", value: 76, color: "#e84545" },
