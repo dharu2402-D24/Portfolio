@@ -112,7 +112,7 @@ const timeline = [
 ];
 
 function ProjectGallerySection() {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   return (
     <div className="mt-40 relative">
@@ -134,8 +134,8 @@ function ProjectGallerySection() {
             key={item.phase}
             item={item}
             index={index}
-            hoveredIndex={hoveredIndex}
-            setHoveredIndex={setHoveredIndex}
+            activeIndex={activeIndex}
+            setActiveIndex={setActiveIndex}
           />
         ))}
       </div>
@@ -146,26 +146,25 @@ function ProjectGallerySection() {
 function GalleryCard({
   item,
   index,
-  hoveredIndex,
-  setHoveredIndex
+  activeIndex,
+  setActiveIndex
 }: {
   item: (typeof timeline)[number];
   index: number;
-  hoveredIndex: number | null;
-  setHoveredIndex: (idx: number | null) => void;
+  activeIndex: number | null;
+  setActiveIndex: (idx: number | null) => void;
 }) {
-  const isHovered = hoveredIndex === index;
+  const isActive = activeIndex === index;
   const colors = ["#a93439", "#168f86", "#a93439", "#168f86"];
   const bgColor = colors[index % colors.length];
 
   return (
     <motion.div
-      onMouseEnter={() => setHoveredIndex(index)}
-      onMouseLeave={() => setHoveredIndex(null)}
+      onClick={() => setActiveIndex(isActive ? null : index)}
       animate={{
-        y: hoveredIndex !== null && index < hoveredIndex ? "-1.25vw" : "0vw",
-        backgroundColor: isHovered ? bgColor : "#101010",
-        scale: isHovered ? 1 : 1,
+        y: activeIndex !== null && index < activeIndex ? "-1.25vw" : "0vw",
+        backgroundColor: isActive ? bgColor : "#101010",
+        scale: isActive ? 1 : 1,
       }}
       transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
       className="relative cursor-pointer overflow-hidden rounded-2xl border border-white/[0.08] shadow-[0_20px_60px_rgba(0,0,0,0.22)]"
@@ -180,7 +179,7 @@ function GalleryCard({
         style={{
           background:
             "linear-gradient(135deg, rgba(255,255,255,0.035) 0%, transparent 42%, rgba(0,0,0,0.18) 100%)",
-          opacity: isHovered ? 0.75 : 0.25,
+          opacity: isActive ? 0.75 : 0.25,
         }}
       />
 
@@ -188,8 +187,8 @@ function GalleryCard({
       <div
         className="absolute left-0 top-0 bottom-0 w-[3px] pointer-events-none"
         style={{
-          backgroundColor: isHovered ? "rgba(255,255,255,0.45)" : bgColor,
-          opacity: isHovered ? 0.55 : 0.25,
+          backgroundColor: isActive ? "rgba(255,255,255,0.45)" : bgColor,
+          opacity: isActive ? 0.55 : 0.25,
         }}
       />
 
@@ -198,8 +197,8 @@ function GalleryCard({
           <span
             className="w-2 h-2 rounded-full shrink-0"
             style={{
-              backgroundColor: isHovered ? "rgba(255,255,255,0.65)" : bgColor,
-              boxShadow: isHovered ? "0 0 12px rgba(255,255,255,0.18)" : "none",
+              backgroundColor: isActive ? "rgba(255,255,255,0.65)" : bgColor,
+              boxShadow: isActive ? "0 0 12px rgba(255,255,255,0.18)" : "none",
             }}
           />
           <h3 className="font-['Space_Grotesk'] text-[clamp(25px,4vw,42px)] uppercase font-bold text-white tracking-[-0.035em] leading-none">
@@ -213,7 +212,7 @@ function GalleryCard({
       </div>
 
       <AnimatePresence initial={false}>
-        {isHovered && (
+        {isActive && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
