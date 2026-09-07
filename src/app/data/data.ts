@@ -14,6 +14,7 @@ import odysseyLogo from "../../assets/images/odyssey logo.png";
 import openHouseShirt from "../../assets/images/OPENHOUSESHIRT.png";
 import airupImage from "../../assets/images/AIRUPBOTTLEMOCKUP.png";
 import donutImage from "../../assets/images/donut.png";
+import spamItImage from "../../assets/images/spam_it.png";
 import ecellCardImage from "../../assets/images/ecell tshirt 4.png";
 import ecellHeroImage from "../../assets/images/ECELLTHSIRTS (2).png";
 import igniteRoomShirt from "../../assets/images/IGNITEROOMSHIRT.png";
@@ -145,6 +146,35 @@ export const featured: ProjectDetail[] = [
 export const more: (ProjectDetail | { id: string; title: string; category: string; image: string })[] = [
   // Full detail — appears 4th in All Projects, right after the 3 featured
   {
+    id: "spam-it",
+    title: "Spam It — LED Race Game",
+    category: "Game Des+Dev",
+    image: spamItImage,
+    description:
+      "A two-player Arduino-based racing game controlled through physical button inputs.",
+    role: "Electronics and Aesthetics",
+    process: [
+      {
+        step: "The Challenge",
+        text: "Most games lack physical engagement, limiting interaction to screens. The goal was to create a fast, tactile, and competitive experience.",
+      },
+      {
+        step: "The Solution",
+        text: "A hardware-driven game system where players control LED cars through real-world inputs and navigate dynamic challenges.",
+      },
+      {
+        step: "Key Decisions",
+        text: "Real-time button input handling. Dynamic gameplay obstacles. Physical LED track for live feedback. Balanced mechanics between speed and control.",
+      },
+      {
+        step: "Impact",
+        text: "Created an engaging tangible gaming experience beyond screens. Demonstrated real-time hardware interaction and responsiveness. Successfully merged game design with embedded systems.",
+      },
+    ],
+    link: "https://github.com",
+  },
+
+  {
     id: "aapka-admission",
     title: "Aapka Admission",
     category: "UI/UX Design",
@@ -209,6 +239,36 @@ export const more: (ProjectDetail | { id: string; title: string; category: strin
     ],
   },
 
+  // Full detail + image carousel
+  {
+    id: "netflix",
+    title: "Netflix UI Redesign",
+    category: "UI/UX Design",
+    image: netflixLogo,
+    images: [netflixPage1, netflixPage2],
+    description:
+      "A concept redesign of the Netflix interface focused on improved content discovery, cleaner visual hierarchy, and a more immersive, editorial browsing experience.",
+    role: "UI/UX Designer",
+    process: [
+      {
+        step: "Research",
+        text: "Audited the existing Netflix UI for hierarchy issues, cluttered rows, and low content discoverability.",
+      },
+      {
+        step: "Concept",
+        text: "Explored editorial-style layouts inspired by streaming platforms with stronger visual identity.",
+      },
+      {
+        step: "Design",
+        text: "Redesigned the home, browse, and detail screens with bolder typography and refined grid systems.",
+      },
+      {
+        step: "Review",
+        text: "Iterated on contrast, spacing, and component consistency across light and dark contexts.",
+      },
+    ],
+  },
+
   {
     id: "induction-proposal-ppt",
     title: "Induction Proposal PPT",
@@ -243,36 +303,6 @@ export const more: (ProjectDetail | { id: string; title: string; category: strin
     title: "InfoGraphic IGDA",
     category: "Graphic Design",
     image: igdaImage,
-  },
-
-  // Full detail + image carousel
-  {
-    id: "netflix",
-    title: "Netflix UI Redesign",
-    category: "UI/UX Design",
-    image: netflixLogo,
-    images: [netflixPage1, netflixPage2],
-    description:
-      "A concept redesign of the Netflix interface focused on improved content discovery, cleaner visual hierarchy, and a more immersive, editorial browsing experience.",
-    role: "UI/UX Designer",
-    process: [
-      {
-        step: "Research",
-        text: "Audited the existing Netflix UI for hierarchy issues, cluttered rows, and low content discoverability.",
-      },
-      {
-        step: "Concept",
-        text: "Explored editorial-style layouts inspired by streaming platforms with stronger visual identity.",
-      },
-      {
-        step: "Design",
-        text: "Redesigned the home, browse, and detail screens with bolder typography and refined grid systems.",
-      },
-      {
-        step: "Review",
-        text: "Iterated on contrast, spacing, and component consistency across light and dark contexts.",
-      },
-    ],
   },
 
   {
