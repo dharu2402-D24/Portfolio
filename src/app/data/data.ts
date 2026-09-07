@@ -13,7 +13,7 @@ import netflixPage2 from "../../assets/images/NETFLIX UI PAGE 2.png";
 import odysseyLogo from "../../assets/images/odyssey logo.png";
 import openHouseShirt from "../../assets/images/OPENHOUSESHIRT.png";
 import airupImage from "../../assets/images/AIRUPBOTTLEMOCKUP.png";
-import donutImage from "../../assets/images/DONUT.png";
+import donutImage from "../../assets/images/donut.png";
 import ecellCardImage from "../../assets/images/ecell tshirt 4.png";
 import ecellHeroImage from "../../assets/images/ECELLTHSIRTS (2).png";
 import igniteRoomShirt from "../../assets/images/IGNITEROOMSHIRT.png";
