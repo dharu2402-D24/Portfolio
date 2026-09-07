@@ -53,7 +53,7 @@ export const featured: ProjectDetail[] = [
   {
     id: "flow-state",
     title: "Flow State",
-    category: "3D / Game Dev",
+    category: "Game Des+Dev",
     image: flowStateLogo,
     hero: flowStateThumbnail,
     description:
@@ -374,7 +374,7 @@ export const more: (ProjectDetail | { id: string; title: string; category: strin
   {
     id: "geonodes",
     title: "Geometry Nodes Blob",
-    category: "3D Animation",
+    category: "3D",
     image: geonodesThumb,
     video: geonodesVideo,
   },
@@ -382,7 +382,7 @@ export const more: (ProjectDetail | { id: string; title: string; category: strin
   {
     id: "hexa-animation",
     title: "Hexa Animation",
-    category: "3D Animation",
+    category: "3D",
     image: hexaThumb,
     video: hexaVideo,
   },
@@ -390,7 +390,7 @@ export const more: (ProjectDetail | { id: string; title: string; category: strin
   {
     id: "cubic-animation",
     title: "Cubic Animation",
-    category: "3D Animation",
+    category: "3D",
     image: cubicThumb,
     video: cubicVideo,
   },
@@ -412,7 +412,7 @@ export const more: (ProjectDetail | { id: string; title: string; category: strin
   {
     id: "donut",
     title: "The Donut Project",
-    category: "3D Design",
+    category: "3D",
     image: donutImage,
   },
 ];

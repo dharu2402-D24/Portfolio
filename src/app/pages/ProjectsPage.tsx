@@ -5,7 +5,7 @@ import { SectionLabel } from "../ui/SectionLabel";
 import { Reveal } from "../effects/Reveal";
 import { allProjects } from "../data/data";
 
-const categories = ["All", "3D / Game Dev", "UI/UX Design", "Graphic Design", "Logo Design", "3D Design", "Logo Redesign", "Redesign"];
+const categories = ["All", "3D", "Game Des+Dev", "UI/UX Design", "Graphic Design", "Logo Design", "Logo Redesign", "Redesign"];
 
 export function ProjectsPage({ onOpen }: { onOpen: (id: string) => void }) {
   const [filter, setFilter] = useState("All");
