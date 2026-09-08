@@ -4,6 +4,34 @@ import { SectionLabel } from "../ui/SectionLabel";
 import { Reveal } from "../effects/Reveal";
 import { WordReveal } from "../effects/WordReveal";
 import { JengaText } from "../effects/JengaText";
+import LogoLoop from "../ui/LogoLoop";
+import {
+  SiFigma,
+  SiBlender,
+  SiUnrealengine,
+  SiDavinciresolve,
+  SiMiro,
+  SiNotion,
+  SiDocker,
+  SiReact,
+  SiNodedotjs,
+  SiThreedotjs,
+  SiWebgl,
+  SiMysql,
+  SiGithub,
+  SiCanvas,
+  SiAutocad,
+  SiCursor,
+} from "react-icons/si";
+
+import affinityImg from "../../assets/images/Affinity_(App)_Logo.svg.png";
+import illustratorImg from "../../assets/images/Adobe_Illustrator_CC_icon.svg.png";
+import photoshopImg from "../../assets/images/Adobe_Photoshop_CC_icon.svg.png";
+import substanceImg from "../../assets/images/ADOBE SUBSTANCE PAINTER LOGO.png";
+import canvaImg from "../../assets/images/canva-logo-png_seeklogo-653227.png";
+import figmaImg from "../../assets/images/figma logo.webp";
+import blenderImg from "../../assets/images/Blender_logo_no_text.svg.webp";
+import fusionImg from "../../assets/images/fusion 360 logo.png";
 
 const InteractiveRenderScene = lazy(() =>
   import("../effects/InteractiveRender").then((module) => ({
@@ -60,12 +88,47 @@ function InteractiveRender() {
 
 
 const capabilities = [
-  { label: "Graphic Design", tools: "Figma · Illustrator · Photoshop", value: 76, color: "#e84545" },
-  { label: "UI/UX Design", tools: "Figma", value: 86, color: "#e84545" },
-  { label: "3D Modelling", tools: "Blender", value: 72, color: "#e84545" },
-  { label: "Motion Graphics", tools: "Davinci Resolve", value: 46, color: "#2dd4bf" },
-  { label: "Game Des/Dev", tools: "Unreal Engine · Unity", value: 50, color: "#2dd4bf" },
-  { label: "Frontend Dev", tools: "HTML · JS · React", value: 28, color: "#2dd4bf" },
+  { label: "Graphic Design", value: 76, color: "#e84545" },
+  { label: "UI/UX Design", value: 86, color: "#e84545" },
+  { label: "3D Modelling", value: 72, color: "#e84545" },
+  { label: "Video Editing", value: 46, color: "#2dd4bf" },
+  { label: "Game Des/Dev", value: 50, color: "#2dd4bf" },
+  { label: "Frontend Dev", value: 28, color: "#2dd4bf" },
+];
+
+// Inline label node for tools without an icon in react-icons
+const TextLogo = ({ label }: { label: string }) => (
+  <span style={{
+    fontFamily: "'Space Mono', monospace",
+    fontSize: '10px',
+    letterSpacing: '0.12em',
+    textTransform: 'uppercase',
+    whiteSpace: 'nowrap',
+    fontWeight: 700,
+  }}>{label}</span>
+);
+
+const toolLogos = [
+  { src: figmaImg, title: "Figma", color: "#FFFFFF", imgScale: 1.1 },
+  { src: blenderImg, title: "Blender", color: "#FFFFFF", imgScale: 1.1 },
+  { src: affinityImg, title: "Affinity Designer", color: "#FFFFFF", imgScale: 1.15 },
+  { node: <SiUnrealengine size={40} />, title: "Unreal Engine", color: "#FFFFFF" },
+  { src: illustratorImg, title: "Adobe Illustrator", color: "#FFFFFF", imgScale: 1.2 },
+  { src: photoshopImg, title: "Adobe Photoshop", color: "#FFFFFF", imgScale: 1.2 },
+  { node: <SiDavinciresolve size={40} />, title: "DaVinci Resolve", color: "#FFFFFF" },
+  { node: <SiMiro size={40} />, title: "Miro", color: "#FFFFFF" },
+  { node: <SiNotion size={40} />, title: "Notion", color: "#FFFFFF" },
+  { node: <SiDocker size={36} />, title: "Docker", color: "#FFFFFF" },
+  { src: substanceImg, title: "Adobe Substance Painter", color: "#FFFFFF", imgScale: 1.35 },
+  { src: fusionImg, title: "Fusion 360", color: "#FFFFFF", imgScale: 1.8 },
+  { node: <SiReact size={40} />, title: "React.js", color: "#FFFFFF" },
+  { node: <SiNodedotjs size={40} />, title: "Node.js", color: "#FFFFFF" },
+  { node: <SiThreedotjs size={40} />, title: "Three.js", color: "#FFFFFF" },
+  { node: <SiWebgl size={40} />, title: "WebGL", color: "#FFFFFF" },
+  { node: <SiMysql size={40} />, title: "MySQL / SQL", color: "#FFFFFF" },
+  { node: <SiGithub size={40} />, title: "GitHub", color: "#FFFFFF" },
+  { node: <SiCursor size={40} />, title: "Cursor", color: "#FFFFFF" },
+  { src: canvaImg, title: "Canva", color: "#FFFFFF", imgScale: 1.2 },
 ];
 
 const timeline = [
@@ -527,9 +590,6 @@ function CapabilityRow({
           {cap.label}
         </p>
         <span className="h-px flex-1 min-w-[20px] bg-white/[0.06] translate-y-[-2px]" />
-        <p className="font-['Space_Mono'] text-[10px] tracking-[0.18em] uppercase text-[#8a8a8a] whitespace-nowrap">
-          {cap.tools}
-        </p>
       </div>
 
       <SkillWaveform value={cap.value} />
@@ -584,6 +644,45 @@ export function AboutPage({ onContact }: { onContact: () => void }) {
             <CapabilityRow key={c.label} cap={c} index={i} />
           ))}
         </div>
+
+        {/* Tool Logo Loop */}
+        <Reveal delay={0.1}>
+          <div className="mt-14 overflow-visible" style={{ position: 'relative' }}>
+            <div className="pb-10 pt-12 -mx-10 px-10 overflow-hidden">
+              <LogoLoop
+                logos={toolLogos}
+                speed={60}
+                direction="left"
+                logoHeight={32}
+                gap={54}
+                hoverSpeed={0}
+                ariaLabel="Tools and software"
+                renderItem={(item) => (
+                  <div 
+                    className="flex flex-col items-center justify-center group relative cursor-pointer transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-4 hover:z-10"
+                    style={{ '--hover-color': item.color || '#ffffff' } as React.CSSProperties}
+                  >
+                    <div className="text-[#8a8a8a] transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:text-[var(--hover-color)] group-hover:scale-[1.4] flex items-center justify-center h-12 w-12 origin-bottom">
+                      {item.node ? (
+                        item.node
+                      ) : (
+                        <img 
+                          src={item.src} 
+                          alt={item.title} 
+                          style={{ transform: item.imgScale ? `scale(${item.imgScale})` : undefined }}
+                          className="h-full w-full object-contain grayscale opacity-70 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-100"
+                        />
+                      )}
+                    </div>
+                    <span className="absolute -bottom-10 text-[10px] font-mono tracking-widest uppercase opacity-0 translate-y-3 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:opacity-100 group-hover:translate-y-0 text-[var(--hover-color)] whitespace-nowrap pointer-events-none z-10 text-center drop-shadow-md">
+                      {item.title}
+                    </span>
+                  </div>
+                )}
+              />
+            </div>
+          </div>
+        </Reveal>
       </div>
 
       {/* Unified Approach + Journey timeline */}
